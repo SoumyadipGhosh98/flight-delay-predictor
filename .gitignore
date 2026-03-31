@@ -1,0 +1,16 @@
+# Python
+_pycache_/
+*.pyc
+
+# Environment
+.env
+
+# Secrets
+.streamlit/
+
+# Jupyter
+.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db

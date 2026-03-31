@@ -1,101 +1,177 @@
-# ✈️ Aviation Disruption Intelligence System
-## 🌏 Live Application
-🚀 **Try the live app here:**
-👉 https://flight-delay-predictor-soumyadipghosh.streamlit.app/
-### Multi-Class Flight Delay & Cancellation Prediction (Production-Ready ML System)
+# ✈️ Aviation Disruption Intelligence System  
+### Multi-Class Flight Delay & Cancellation Prediction with AI Copilot
 
 ---
 
-## 🚀 Project Overview
+## 🚀 Live Application  
+👉 https://flight-delay-predictor-soumyadipghosh.streamlit.app/
 
-This project builds a **production-grade, end-to-end machine learning system** to predict flight outcomes **before departure**.
+---
 
-The model classifies flights into:
-- 🟢 On-Time  
-- 🟡 Delayed (>15 mins)  
-- 🔴 Cancelled  
+## 🧠 Project Overview
 
-Built on real-world aviation data, the system transforms raw operational data into **decision intelligence for airline operations**.
+This project develops a *production-ready Aviation Disruption Intelligence System* that predicts flight outcomes *before departure* and converts predictions into *actionable operational decisions*.
+
+The system classifies flights into three categories:
+
+- 🟢 *On-Time*
+- 🟡 *Delayed (>15 minutes)*
+- 🔴 *Cancelled*
+
+Built using *500K+ real-world U.S. Bureau of Transportation Statistics (BTS) flight records*, the project integrates:
+
+- Advanced feature engineering  
+- Machine learning modeling  
+- Decision intelligence layer  
+- AI-powered Copilot (Gemini 2.5 Flash)  
+- Interactive Streamlit deployment  
+
+---
 
 ## 🎯 Business Problem
+
 Flight disruptions create cascading operational and financial challenges:
 
-- Aircraft rotation delays  
-- Crew duty violations  
-- Airport congestion  
-- Passenger missed connections  
-- Compensation & rebooking costs  
-- Fuel inefficiencies  
-- Brand reputation damage  
+### ✈️ Operational Impact
+- Aircraft rotation disruptions  
+- Crew duty time violations  
+- Gate congestion  
+- Missed passenger connections  
 
-### 💡 Objective
-To build a predictive system that:
-- Identifies disruption risk BEFORE departure  
-- Enables proactive planning  
-- Reduces operational uncertainty  
-- Improves airline efficiency
+### 💰 Financial Impact
+- Crew overtime costs  
+- Passenger compensation & rebooking  
+- Fuel inefficiencies  
+- Brand erosion and customer churn  
+
+### ⚠️ Current Gap
+Airlines operate *reactively*, lacking forward-looking intelligence.
+
+---
+
+## 💡 Business Objective
+
+To build a *predictive + decision-support system* that:
+
+- Predicts delay/cancellation risk before departure  
+- Identifies key drivers of disruption  
+- Enables proactive operational decisions  
+- Reduces cost and improves network efficiency  
+
+---
 
 ## 📊 Dataset
-- Source: U.S. Bureau of Transportation Statistics (BTS)  
-- Timeframe: July 2024 – November 2025  
-- Filtered to:
-  - Top 10 Airlines  
-  - Top 10 Airports  
-- Size: ~500,000+ flight records  
 
-Includes:
-- Flight schedules  
-- Carrier data  
-- Airport data  
-- Operational outcomes
+### Source:
+U.S. Bureau of Transportation Statistics (BTS)
 
-## 🧠 Feature Engineering
+### Time Period:
+*July 2024 – November 2025*
 
-### ✈️ Airline Level
-- airline_delay_rate_7f  
-- airline_cancel_rate_7f  
+### Scope:
+- Top 10 airlines  
+- Top 10 airports  
 
-### 🏢 Airport Level
-- airport_delay_rate_7f  
-- airport_daily_flights  
+### Size:
+*~500,000+ flight records*
 
-### 🔁 Route Level
+---
+
+## 🧠 Feature Engineering (CORE STRENGTH)
+
+A major contribution of this project is *multi-level hierarchical feature engineering*:
+
+---
+
+### ✈️ Airline-Level Features
+- airline_delay_rate_7f
+- airline_cancel_rate_7f
+
+👉 Captures *carrier reliability trends*
+
+---
+
+### 🏢 Airport-Level Features
+- airport_delay_rate_7f
+- airport_daily_flights
+
+👉 Captures *congestion intensity and operational load*
+
+---
+
+### 🔁 Route-Level Features
 - route_freq (frequency encoding)
 
-### 🛫 Aircraft Level
-- aircraft_delay_rate_7f  
-- aircraft_cancel_rate_7f  
-- aircraft_rotation_gap_hours  
+👉 Captures *route demand and delay propagation patterns*
 
-### ⏱ Time-Based
-- DEP_HOUR  
-- is_peak_hour (data-driven)  
-- is_weekend  
+---
 
-👉 Captures:
-- Congestion  
-- Delay propagation  
-- Operational reliability
+### 🛫 Aircraft-Level Features (Advanced)
+- aircraft_delay_rate_7f
+- aircraft_cancel_rate_7f
+- aircraft_rotation_gap_hours
+
+👉 Captures *fleet stability and rotation risk*
+
+---
+
+### ⏱ Time-Based Features
+- DEP_HOUR
+- DAY_OF_WEEK
+- is_weekend
+- is_peak_hour
+
+👉 Captures *temporal demand cycles and congestion windows*
+
+---
 
 ## ⚙️ Data Processing Pipeline
-- Data merging (multi-month)
-- Missing value treatment (domain-based)
-- Duplicate validation
-- Outlier analysis (retained)
-- Leakage removal
 
-### Encoding:
-- One-hot → Airlines & Airports  
-- Label → Tail Number  
-- Frequency → Route  
+### 1️⃣ Data Cleaning
+- Missing value handling (domain-based)
+- Duplicate removal
+- Data type corrections
 
-### Validation:
-- Time-based train-test split  
+---
 
-### Multicollinearity:
-- VIF-based feature removal
+### 2️⃣ Leakage Prevention
+Strict exclusion of post-outcome variables such as:
+- Actual delays  
+- Arrival performance metrics  
+
+👉 Ensures *real-world deployability*
+
+---
+
+### 3️⃣ Encoding Techniques
+- One-hot encoding → categorical variables  
+- Label encoding → TAIL_NUM  
+- Frequency encoding → route  
+
+---
+
+### 4️⃣ Feature Scaling
+- Applied only to *linear models (Logistic Regression)*  
+- Tree-based models use raw features  
+
+---
+
+### 5️⃣ Multicollinearity Handling
+- Variance Inflation Factor (VIF)
+- Removed redundant variables:
+  - CRS_DEP_TIME
+  - CRS_ELAPSED_TIME
+
+---
+
+### 6️⃣ Train-Test Split
+- Time-aware split to preserve *operational causality*
+
+---
 
 ## 🎯 Target Variable
+
+Multi-class classification:
 
 | Class | Meaning |
 |------|--------|
@@ -103,98 +179,170 @@ Includes:
 | 1 | Delayed |
 | 2 | Cancelled |
 
-## 🤖 Models Implemented
-- Logistic Regression (Baseline + Tuned)
-- Decision Tree
-- Random Forest
-- Gradient Boosting
-- XGBoost (Final Model)
+---
 
-## 📈 Evaluation Metrics
+## 🤖 Machine Learning Models
+
+### Baseline Model:
+- Logistic Regression
+
+### Advanced Models:
+- Decision Tree  
+- Random Forest  
+- Gradient Boosting  
+- *XGBoost (Best Model)*  
+
+---
+
+## 📈 Model Evaluation Metrics
+
 - Accuracy  
 - Precision  
 - Recall  
-- F1 Score (Macro) ⭐  
+- *F1 Score (Macro)* ⭐  
 - ROC-AUC  
-- Cohen Kappa  
+- Cohen Kappa (Reliability)
 
-### Why F1 Macro?
+---
+
+### 💡 Why F1 Macro?
+
 - Treats all classes equally  
-- Important for delay & cancellation detection  
-- Avoids bias toward on-time flights
+- Critical for imbalanced datasets  
+- Ensures delays & cancellations are not ignored  
 
-## 🏆 Model Performance
-- ROC-AUC: ~0.80  
-- Strong → On-Time  
-- Moderate → Delay  
-- Weak → Cancellation  
+---
 
-👉 Reflects real-world aviation uncertainty
+## 🏆 Model Performance Summary
 
-## ⚠️ Challenges
+- ROC-AUC: *~0.80*
+- Strong performance:
+  - On-time predictions  
+- Moderate performance:
+  - Delay detection  
+- Challenging:
+  - Cancellation prediction (rare events)
+
+---
+
+## ⚠️ Key Challenges
+
 - Severe class imbalance  
-- Missing weather & ATC data  
-- Complex non-linear delay propagation
+- Lack of weather / ATC data  
+- Complex non-linear delay propagation  
+- Rare event prediction (cancellations)  
 
-## 🧠 Business Insights
-- Airport congestion drives delays  
-- Airline reliability matters  
-- Aircraft history improves prediction  
-- Peak hours increase disruption risk
+---
 
-## 🖥️ Streamlit Application
+## 🧠 Decision Intelligence Layer (KEY DIFFERENTIATOR)
+
+The system goes beyond prediction by providing:
+
+### 🔍 Risk Classification
+- Low Risk  
+- Moderate Risk  
+- High Risk  
+
+---
+
+### 📌 Operational Recommendations
+
+- Delay → buffer time, congestion monitoring  
+- Cancellation → rebooking, aircraft reassignment  
+- On-time → standard operations  
+
+---
+
+### 💰 Business Impact Insights
+
+- Cost implications  
+- Operational efficiency  
+- Customer satisfaction impact  
+
+---
+
+## 🤖 AI Copilot (Gemini 2.5 Flash)
+
+Integrated AI layer that:
+
+- Explains prediction results  
+- Identifies key disruption drivers  
+- Provides human-readable recommendations  
+
+---
+
+## 🔐 Secure API Handling
+
+- Local: .env file  
+- Deployment: Streamlit Secrets  
+
+---
+
+## 🖥️ Streamlit Application Features
+
+- Premium UI dashboard  
 - Real-time prediction  
-- Automated feature generation  
-- Interactive UI  
-- Business interpretation output
+- AI-generated insights  
+- Decision support system  
+- Business impact analysis  
+
+---
 
 ## 📂 Project Structure
-flight_delay_app/
-│
-├── app.py
-├── requirements.txt
-├── README.md
-│
-├── model/
-│   ├── model.pkl
-│   ├── model_columns.pkl
-│   ├── le_tail.pkl
-│   ├── route_frequency.pkl
-│   ├── airline_stats.pkl
-│   ├── airport_stats.pkl
-│   ├── aircraft_stats.pkl
-│
-├── notebooks/
-│   └── Flight_Delay_Modeling.ipynb
 
-## 🚀 Run Locally
-pip install -r requirements.txt  
-streamlit run app.py
+flight_delay_app/ │ ├── app.py                  # Streamlit application │ ├── model/ │   ├── model.pkl │   ├── model_columns.pkl │   ├── le_tail.pkl │   ├── route_frequency.pkl │   ├── airline_stats.pkl │   ├── airport_stats.pkl │   ├── aircraft_stats.pkl │   ├── top_airlines.pkl │   ├── top_airports.pkl │ ├── notebooks/ │   └── full_project.ipynb │ ├── requirements.txt ├── README.md ├── .gitignore
 
-## 🌍 Deployment
-Deployed using Streamlit Cloud:
-1. Upload to GitHub  
-2. Connect repo  
-3. Deploy app.py
+---
 
-## 🔍 Key Technical Decisions
-- Leakage-free modeling  
-- Time-based validation  
-- No scaling for tree models  
-- Frequency encoding for route  
-- Rolling features for temporal patterns  
-- Threshold tuning for recall
+## 🚀 Deployment
 
-## 🔮 Future Improvements
+- Platform: Streamlit Cloud  
+- Auto-deployment via GitHub  
+- CI/CD enabled  
+
+---
+
+## 🔐 Security Best Practices
+
+- API keys NOT stored in code  
+- .env excluded via .gitignore  
+- Secrets managed securely in deployment  
+
+---
+
+## 📊 Business Insights Derived
+
+- Airport congestion is the strongest delay driver  
+- Airline reliability significantly impacts outcomes  
+- Aircraft-level history improves prediction accuracy  
+- Peak hours increase disruption probability  
+
+---
+
+## 🚀 Future Enhancements
+
 - Weather data integration  
-- ATC signals  
-- LSTM models  
-- Cost-sensitive learning
+- Real-time flight API integration  
+- Cost prediction layer  
+- SHAP-based explainability  
+- Network-level simulation  
+
+---
 
 ## 👨‍💻 Author
-Soumyadip Ghosh  
-MBA (Analytics) | Data Science
 
-## ⭐ Final Note
-This is not just a machine learning model —  
-it is a real-world aviation intelligence system designed for operational decision-making.
+*Soumyadip Ghosh*  
+MBA | Data Science & Analytics  
+
+---
+
+## ⭐ Acknowledgment
+
+Dataset provided by:  
+U.S. Bureau of Transportation Statistics (BTS)
+
+---
+
+## ⭐ If you found this useful
+
+Give it a ⭐ on GitHub!
